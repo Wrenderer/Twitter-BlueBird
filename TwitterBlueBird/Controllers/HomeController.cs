@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TwitterBlueBird.Helpers;
+using TwitterBlueBird.ViewModels;
 
 namespace TwitterBlueBird.Controllers
 {
@@ -11,7 +12,8 @@ namespace TwitterBlueBird.Controllers
 	{
 		public ActionResult Index()
 		{
-			return View(TweetStream.GetTweets());
+			IndexViewModel vm = new IndexViewModel(TweetStream.GetTweets(),Scope.HappyWords(), Scope.AngryWords());
+			return View(vm);
 		}
 
 		public ActionResult About()

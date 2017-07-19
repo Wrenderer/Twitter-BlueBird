@@ -193,6 +193,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TwitterAPI.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\IndexViewModel.cs" />
     <Compile Include="Word.cs">
       <DependentUpon>TwitterAPI.tt</DependentUpon>
     </Compile>
