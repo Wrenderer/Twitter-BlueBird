@@ -3,6 +3,7 @@
 
 # Secrets and Passwords
 /TwitterBlueBird/PrivateSettings.config
+/TwitterBlueBird/ConnectionStrings.config
 
 # User-specific files
 *.suo
