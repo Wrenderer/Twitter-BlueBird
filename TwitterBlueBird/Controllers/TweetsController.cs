@@ -36,7 +36,47 @@ namespace TwitterBlueBird.Controllers
             return View(tweet);
         }
 
-        protected override void Dispose(bool disposing)
+		// Ajax POST: Tweets/RateAngry/:ID
+		[HttpPost]
+		public ActionResult RateHappy(int? id)
+		{
+			if (id != null)
+			{
+				Tweet tweet = db.Tweets.Find(id);
+				if (tweet != null && tweet.Mood == null)
+				{
+					tweet.Mood = "Happy";
+					using (var context = new TwitterAPIContainer())
+					{
+						context.Entry(tweet).State = EntityState.Modified;
+						context.SaveChanges();
+					}
+				}
+			}
+			return Content(id.ToString());
+		}
+
+		// Ajax POST: Tweets/RateAngry/:ID
+		[HttpPost]
+		public ActionResult RateAngry(int? id)
+		{
+			if (id != null)
+			{
+				Tweet tweet = db.Tweets.Find(id);
+				if (tweet != null && tweet.Mood == null)
+				{
+					tweet.Mood = "Angry";
+					using (var context = new TwitterAPIContainer())
+					{
+						context.Entry(tweet).State = EntityState.Modified;
+						context.SaveChanges();
+					}
+				}
+			}
+			return Content(id.ToString());
+		}
+
+		protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
