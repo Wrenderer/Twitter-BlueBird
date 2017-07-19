@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/19/2017 07:40:31
+-- Date Created: 07/19/2017 14:24:21
 -- Generated from EDMX file: c:\users\kokiri\documents\visual studio 2017\Projects\TwitterBlueBird\TwitterBlueBird\TwitterAPI.edmx
 -- --------------------------------------------------
 
@@ -22,6 +22,12 @@ GO
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Tweets]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Tweets];
+GO
+IF OBJECT_ID(N'[dbo].[Words]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Words];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -35,6 +41,15 @@ CREATE TABLE [dbo].[Tweets] (
 );
 GO
 
+-- Creating table 'Words'
+CREATE TABLE [dbo].[Words] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Text] nvarchar(max)  NOT NULL,
+    [HappyCount] int  NOT NULL,
+    [AngryCount] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -42,6 +57,12 @@ GO
 -- Creating primary key on [Id] in table 'Tweets'
 ALTER TABLE [dbo].[Tweets]
 ADD CONSTRAINT [PK_Tweets]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Words'
+ALTER TABLE [dbo].[Words]
+ADD CONSTRAINT [PK_Words]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 

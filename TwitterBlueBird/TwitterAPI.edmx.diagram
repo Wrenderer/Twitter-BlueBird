@@ -5,7 +5,8 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="dbfbf1c260b749e5bbb914dce73c771f" Name="Diagram1" >
-        <EntityTypeShape EntityType="TwitterAPI.Tweet" Width="1.5" PointX="6.375" PointY="2.375" />
+        <EntityTypeShape EntityType="TwitterAPI.Tweet" Width="1.5" PointX="3" PointY="2.125" />
+        <EntityTypeShape EntityType="TwitterAPI.Word" Width="1.5" PointX="5.375" PointY="2.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

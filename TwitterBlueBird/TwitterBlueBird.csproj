@@ -193,6 +193,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TwitterAPI.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Word.cs">
+      <DependentUpon>TwitterAPI.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />

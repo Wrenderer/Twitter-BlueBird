@@ -50,6 +50,22 @@ namespace TwitterBlueBird.Controllers
 					{
 						context.Entry(tweet).State = EntityState.Modified;
 						context.SaveChanges();
+						String[] words = tweet.Text.Trim().Split(' ');
+						foreach (String word in words)
+						{
+							Word stored_word = context.Words.FirstOrDefault(w => w.Text == word);
+							if (stored_word == null)
+							{
+								context.Words.Add(new Word() { Text = word, HappyCount = 1 });
+								context.SaveChanges();
+							}
+							else
+							{
+								stored_word.HappyCount += 1;
+								context.Entry(stored_word).State = EntityState.Modified;
+								context.SaveChanges();
+							}
+						}
 					}
 				}
 			}
@@ -70,6 +86,22 @@ namespace TwitterBlueBird.Controllers
 					{
 						context.Entry(tweet).State = EntityState.Modified;
 						context.SaveChanges();
+						String[] words = tweet.Text.Trim().Split(' ');
+						foreach (String word in words)
+						{
+							Word stored_word = context.Words.FirstOrDefault(w => w.Text == word);
+							if (stored_word == null)
+							{
+								context.Words.Add(new Word() { Text = word, AngryCount = 1 });
+								context.SaveChanges();
+							}
+							else
+							{
+								stored_word.AngryCount += 1;
+								context.Entry(stored_word).State = EntityState.Modified;
+								context.SaveChanges();
+							}
+						}
 					}
 				}
 			}

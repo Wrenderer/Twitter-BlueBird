@@ -7,6 +7,7 @@
     <Schema Namespace="TwitterAPI.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="TwitterAPIStoreContainer">
     <EntitySet Name="Tweets" EntityType="TwitterAPI.Store.Tweets" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Words" EntityType="TwitterAPI.Store.Words" store:Type="Tables" Schema="dbo" />
   </EntityContainer>
   <EntityType Name="Tweets">
     <Key>
@@ -16,12 +17,22 @@
     <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Mood" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
+  <EntityType Name="Words">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="HappyCount" Type="int" Nullable="false" DefaultValue="0" />
+    <Property Name="AngryCount" Type="int" Nullable="false" DefaultValue="0" />
+  </EntityType>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TwitterAPI" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="TwitterAPIContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Tweets" EntityType="TwitterAPI.Tweet" />
+          <EntitySet Name="Words" EntityType="TwitterAPI.Word" />
         </EntityContainer>
         <EntityType Name="Tweet">
           <Key>
@@ -30,6 +41,15 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Text" Type="String" Nullable="false" />
           <Property Name="Mood" Type="String" Nullable="true" />
+        </EntityType>
+        <EntityType Name="Word">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" Nullable="false" />
+          <Property Name="HappyCount" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="AngryCount" Type="Int32" Nullable="false" DefaultValue="0" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -43,6 +63,16 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Text" ColumnName="Text" />
           <ScalarProperty Name="Mood" ColumnName="Mood" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Words">
+      <EntityTypeMapping TypeName="IsTypeOf(TwitterAPI.Word)">
+        <MappingFragment StoreEntitySet="Words">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="HappyCount" ColumnName="HappyCount" />
+          <ScalarProperty Name="AngryCount" ColumnName="AngryCount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
