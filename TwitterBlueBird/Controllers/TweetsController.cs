@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TwitterBlueBird;
+using TwitterBlueBird.Helpers;
 
 namespace TwitterBlueBird.Controllers
 {
@@ -17,7 +18,7 @@ namespace TwitterBlueBird.Controllers
         // GET: Tweets
         public ActionResult Index()
         {
-            return View(db.Tweets.ToList());
+			return View(Scope.UnratedTweets());
         }
 
         // GET: Tweets/Details/:ID
