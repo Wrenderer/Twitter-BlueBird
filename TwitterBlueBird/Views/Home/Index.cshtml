@@ -1,5 +1,42 @@
 ﻿@model IEnumerable<TwitterBlueBird.Tweet>
 
+@section Scripts
+{
+	<script>
+		// With slightly more time, easy refactor: add constant url or add url to
+		// data attributes on buttons to allow javascript to be put in a
+		// non-razor file.
+		$('.RateHappyBtn').click(function (tweet) {
+			$.ajax({
+				url: '@(Url.Action("RateHappy", "Tweets"))',
+				type: "POST",
+				data: { id: $(tweet.target).data("id") },
+				cache: false,
+				async: true,
+				success: function (data) {
+					$("#" + data).fadeOut(300, function () {
+						$("#" + data).remove();
+					});
+				}
+			});
+		});
+		$('.RateAngryBtn').click(function (tweet) {
+			$.ajax({
+				url: '@(Url.Action("RateAngry", "Tweets"))',
+				type: "POST",
+				data: { id: $(tweet.target).data("id") },
+				cache: false,
+				async: true,
+				success: function (data) {
+					$("#" + data).fadeOut(300, function () {
+						$("#" + data).remove();
+					});
+				}
+			});
+		});
+	</script>
+}
+
 @{
 	ViewBag.Title = "Twitter BlueBird";
 	Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,13 +49,20 @@
 		<th>
 			@Html.DisplayNameFor(model => model.Text)
 		</th>
+		<th></th>
 	</tr>
 
 	@foreach (var item in Model)
 	{
-		<tr>
+		<tr id="@item.Id">
 			<td>
 				@Html.DisplayFor(modelItem => item.Text)
+			</td>
+			<td>
+				<div class="btn-group">
+					<button data-id="@item.Id" class="btn btn-outline-success RateHappyBtn">Happy</button>
+					<button data-id="@item.Id" class="btn btn-outline-danger RateAngryBtn">Angry</button>
+				</div>
 			</td>
 		</tr>
 	}
