@@ -11,7 +11,7 @@ namespace TwitterBlueBird.Controllers
 	{
 		public ActionResult Index()
 		{
-			return View(Scope.UnratedTweets());
+			return View(TweetStream.GetTweets());
 		}
 
 		public ActionResult About()
