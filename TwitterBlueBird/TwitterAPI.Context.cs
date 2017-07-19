@@ -26,5 +26,6 @@ namespace TwitterBlueBird
         }
     
         public virtual DbSet<Tweet> Tweets { get; set; }
+        public virtual DbSet<Word> Words { get; set; }
     }
 }
