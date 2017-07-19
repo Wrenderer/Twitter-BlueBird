@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TwitterBlueBird.Tweet>
+﻿@model TwitterBlueBird.ViewModels.IndexViewModel
 
 @section Scripts
 {
@@ -45,14 +45,7 @@
 <h2>Rate these Tweets!</h2>
 
 <table class="table">
-	<tr>
-		<th>
-			@Html.DisplayNameFor(model => model.Text)
-		</th>
-		<th></th>
-	</tr>
-
-	@foreach (var item in Model)
+	@foreach (var item in Model.RatableTweets)
 	{
 		<tr id="@item.Id">
 			<td>
@@ -67,3 +60,21 @@
 		</tr>
 	}
 </table>
+
+<h1>Top 10 Happy Words</h1>
+
+<div class="list-group">
+	@foreach (var item in Model.TopHappyWords)
+	{
+		<span class="list-group-item list-group-item-action list-group-item-success">@item.Text</span>
+	}
+</div>
+
+<h1>Top 10 Angry Words</h1>
+
+<div class="list-group">
+	@foreach (var item in Model.TopAngryWords)
+	{
+		<span class="list-group-item list-group-item-action list-group-item-danger">@item.Text</span>
+	}
+</div>
