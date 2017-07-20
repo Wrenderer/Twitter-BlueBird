@@ -37,7 +37,7 @@ namespace TwitterBlueBird.Helpers
 				return (from t in context.Words
 						where t.HappyCount > t.AngryCount
 						select t)
-						.OrderBy(t => t.HappyCount)
+						.OrderByDescending(t => t.HappyCount)
 						.Take(limit)
 						.ToList();
 			}
@@ -50,7 +50,7 @@ namespace TwitterBlueBird.Helpers
 				return (from t in context.Words
 						where t.HappyCount < t.AngryCount
 						select t)
-						.OrderBy(t => t.AngryCount)
+						.OrderByDescending(t => t.AngryCount)
 						.Take(limit)
 						.ToList();
 			}
