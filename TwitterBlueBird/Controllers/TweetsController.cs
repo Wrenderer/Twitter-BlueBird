@@ -14,6 +14,7 @@ namespace TwitterBlueBird.Controllers
     public class TweetsController : Controller
     {
         private TwitterAPIContainer db = new TwitterAPIContainer();
+		private readonly String[] WordBlacklist = { "the", "and", "or", "at", "RT", "to", "a", "in", "but", "is", "so", "as", "by" };
 
         // GET: Tweets
         public ActionResult Index()
@@ -53,6 +54,7 @@ namespace TwitterBlueBird.Controllers
 						String[] words = tweet.Text.Trim().Split(' ');
 						foreach (String word in words)
 						{
+							if (word.ToCharArray()[0] == '@') continue;
 							Word stored_word = context.Words.FirstOrDefault(w => w.Text == word);
 							if (stored_word == null)
 							{
@@ -61,9 +63,12 @@ namespace TwitterBlueBird.Controllers
 							}
 							else
 							{
-								stored_word.HappyCount += 1;
-								context.Entry(stored_word).State = EntityState.Modified;
-								context.SaveChanges();
+								if (!WordBlacklist.Contains(stored_word.Text))
+								{
+									stored_word.HappyCount += 1;
+									context.Entry(stored_word).State = EntityState.Modified;
+									context.SaveChanges();
+								}
 							}
 						}
 					}
@@ -89,6 +94,7 @@ namespace TwitterBlueBird.Controllers
 						String[] words = tweet.Text.Trim().Split(' ');
 						foreach (String word in words)
 						{
+							if(word.ToCharArray()[0] == '@') continue;
 							Word stored_word = context.Words.FirstOrDefault(w => w.Text == word);
 							if (stored_word == null)
 							{
@@ -97,9 +103,12 @@ namespace TwitterBlueBird.Controllers
 							}
 							else
 							{
-								stored_word.AngryCount += 1;
-								context.Entry(stored_word).State = EntityState.Modified;
-								context.SaveChanges();
+								if (!WordBlacklist.Contains(stored_word.Text))
+								{
+									stored_word.AngryCount += 1;
+									context.Entry(stored_word).State = EntityState.Modified;
+									context.SaveChanges();
+								}
 							}
 						}
 					}
