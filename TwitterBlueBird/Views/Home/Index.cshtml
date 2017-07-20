@@ -63,18 +63,24 @@
 
 <h1>Top 10 Happy Words</h1>
 
-<div class="list-group">
+<ul class="list-group">
 	@foreach (var item in Model.TopHappyWords)
 	{
-		<span class="list-group-item list-group-item-action list-group-item-success">@item.Text</span>
+		<li class="list-group-item list-group-item-action list-group-item-success justify-content-between">
+			<span>@item.Text</span>
+			<span class="badge badge-default badge-pill">@item.HappyCount</span>
+		</li>
 	}
-</div>
+</ul>
 
 <h1>Top 10 Angry Words</h1>
 
-<div class="list-group">
+<ul class="list-group">
 	@foreach (var item in Model.TopAngryWords)
 	{
-		<span class="list-group-item list-group-item-action list-group-item-danger">@item.Text</span>
+		<li class="list-group-item list-group-item-action list-group-item-danger justify-content-between">
+			<span>@item.Text</span>
+			<span class="badge badge-default badge-pill">@item.AngryCount</span>
+		</li>
 	}
-</div>
+</ul>
