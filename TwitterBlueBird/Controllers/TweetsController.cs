@@ -14,7 +14,6 @@ namespace TwitterBlueBird.Controllers
     public class TweetsController : Controller
     {
         private TwitterAPIContainer db = new TwitterAPIContainer();
-		private readonly String[] WordBlacklist = { "the", "and", "or", "at", "RT", "to", "a", "in", "but", "is", "so", "as", "by" };
 
         // GET: Tweets
         public ActionResult Index()
@@ -41,39 +40,8 @@ namespace TwitterBlueBird.Controllers
 		[HttpPost]
 		public ActionResult RateHappy(int? id)
 		{
-			if (id != null)
-			{
-				Tweet tweet = db.Tweets.Find(id);
-				if (tweet != null && tweet.Mood == null)
-				{
-					tweet.Mood = "Happy";
-					using (var context = new TwitterAPIContainer())
-					{
-						context.Entry(tweet).State = EntityState.Modified;
-						context.SaveChanges();
-						String[] words = tweet.Text.Trim().Split(' ');
-						foreach (String word in words)
-						{
-							if (word.ToCharArray()[0] == '@') continue;
-							Word stored_word = context.Words.FirstOrDefault(w => w.Text == word);
-							if (stored_word == null)
-							{
-								context.Words.Add(new Word() { Text = word, HappyCount = 1 });
-								context.SaveChanges();
-							}
-							else
-							{
-								if (!WordBlacklist.Contains(stored_word.Text))
-								{
-									stored_word.HappyCount += 1;
-									context.Entry(stored_word).State = EntityState.Modified;
-									context.SaveChanges();
-								}
-							}
-						}
-					}
-				}
-			}
+			if (id.HasValue) Helpers.Parser.ParseTweet(id.Value, true);
+			
 			return Content(id.ToString());
 		}
 
@@ -81,39 +49,8 @@ namespace TwitterBlueBird.Controllers
 		[HttpPost]
 		public ActionResult RateAngry(int? id)
 		{
-			if (id != null)
-			{
-				Tweet tweet = db.Tweets.Find(id);
-				if (tweet != null && tweet.Mood == null)
-				{
-					tweet.Mood = "Angry";
-					using (var context = new TwitterAPIContainer())
-					{
-						context.Entry(tweet).State = EntityState.Modified;
-						context.SaveChanges();
-						String[] words = tweet.Text.Trim().Split(' ');
-						foreach (String word in words)
-						{
-							if(word.ToCharArray()[0] == '@') continue;
-							Word stored_word = context.Words.FirstOrDefault(w => w.Text == word);
-							if (stored_word == null)
-							{
-								context.Words.Add(new Word() { Text = word, AngryCount = 1 });
-								context.SaveChanges();
-							}
-							else
-							{
-								if (!WordBlacklist.Contains(stored_word.Text))
-								{
-									stored_word.AngryCount += 1;
-									context.Entry(stored_word).State = EntityState.Modified;
-									context.SaveChanges();
-								}
-							}
-						}
-					}
-				}
-			}
+			if (id.HasValue) Helpers.Parser.ParseTweet(id.Value, false);
+
 			return Content(id.ToString());
 		}
 
