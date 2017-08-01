@@ -6,33 +6,33 @@
 		// With slightly more time, easy refactor: add constant url or add url to
 		// data attributes on buttons to allow javascript to be put in a
 		// non-razor file.
+
+		function rateTweet(action, tweet) {
+			$.ajax({
+				url: action,
+				type: "POST",
+				data: { id: $(tweet.target).data("id") },
+				cache: false,
+				async: true,
+				success: function (data) {
+					$("#" + data).fadeOut(300, function () {
+						$("#" + data).remove();
+						$('.RateAngryBtn, .RateHappyBtn').removeClass('disabled');
+					});
+				}
+			});
+		}
+
 		$('.RateHappyBtn').click(function (tweet) {
-			$.ajax({
-				url: '@(Url.Action("RateHappy", "Tweets"))',
-				type: "POST",
-				data: { id: $(tweet.target).data("id") },
-				cache: false,
-				async: true,
-				success: function (data) {
-					$("#" + data).fadeOut(300, function () {
-						$("#" + data).remove();
-					});
-				}
-			});
+			if ($(tweet.target).hasClass('disabled')) return;
+			$('.RateAngryBtn, .RateHappyBtn').addClass('disabled');
+			rateTweet('@(Url.Action("RateHappy", "Tweets"))', tweet);
 		});
+
 		$('.RateAngryBtn').click(function (tweet) {
-			$.ajax({
-				url: '@(Url.Action("RateAngry", "Tweets"))',
-				type: "POST",
-				data: { id: $(tweet.target).data("id") },
-				cache: false,
-				async: true,
-				success: function (data) {
-					$("#" + data).fadeOut(300, function () {
-						$("#" + data).remove();
-					});
-				}
-			});
+			if ($(tweet.target).hasClass('disabled')) return;
+			$('.RateAngryBtn, .RateHappyBtn').addClass('disabled');
+			rateTweet('@(Url.Action("RateAngry", "Tweets"))', tweet);
 		});
 	</script>
 }
