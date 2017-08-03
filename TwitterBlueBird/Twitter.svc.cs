@@ -22,5 +22,14 @@ namespace TwitterBlueBird
 			return random_tweets.ConvertAll(x => x.Text);
 		}
 
+		[OperationContract]
+		[WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json)]
+		public Tuple<string, string> GetMoodTweet()
+		{
+			string tweet = GetTweets(1).FirstOrDefault();
+
+			return new Tuple<string, string>(tweet, Parser.ParseMood(tweet));
+		}
+
 	}
 }

@@ -14,6 +14,7 @@ namespace TwitterBlueBird.Helpers
 		private static readonly char[] WORD_SEPARATORS = { ' ', ',', '.', ':', '\t', '/', '-', '"' };
 		private const String HAPPY = "Happy";
 		private const String ANGRY = "Angry";
+		private const String NEUTRAL = "Neither happy nor angry";
 
 		public static void ParseTweet(int id, bool Happy)
 		{
@@ -57,6 +58,35 @@ namespace TwitterBlueBird.Helpers
 				}
 				context.SaveChanges();
 			}
+		}
+
+		public static string ParseMood(string tweet)
+		{
+			List<Word> matched_words = Scope.MatchedWords(tweet.Trim().ToLowerInvariant().Split(WORD_SEPARATORS).ToList());
+			int happy_total = 0, angry_total = 0;
+
+			foreach (Word matched_word in matched_words)
+			{
+				if (matched_word.HappyCount > matched_word.AngryCount)
+				{
+					happy_total++;
+				}
+				else if (matched_word.HappyCount < matched_word.AngryCount)
+				{
+					angry_total++;
+				}
+			}
+
+			if (happy_total > angry_total)
+			{
+				return HAPPY;
+			}
+			else if (happy_total < angry_total)
+			{
+				return ANGRY;
+			}
+
+			return NEUTRAL;
 		}
 	}
 }

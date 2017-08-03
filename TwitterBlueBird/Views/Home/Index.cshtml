@@ -38,14 +38,23 @@
 		$('#newTweetButton').click(function (tweet) {
 			$.ajax({
 				type: "POST",
-				url: "/twitter.svc/GetTweets",
+				url: "/twitter.svc/GetMoodTweet",
 				contentType: "application/json",
-				data: '{"amount": "1"}',
+				data: '{}',
 				dataType: "json",
 				success: function (result) {
-					$.each(result.d, function (index, value) {
-						$('#single-random-tweet-text').text(value);
-					});
+					$('#single-random-tweet-text').text(result.d.m_Item1);
+					$('#single-random-tweet-mood').text(result.d.m_Item2);
+					$('#single-random-tweet-card').removeClass('card-danger').removeClass('card-success').removeClass('card-primary');
+					if (result.d.m_Item2 == "Happy") {
+						$('#single-random-tweet-card').addClass('card-success');
+					}
+					else if (result.d.m_Item2 == "Angry") {
+						$('#single-random-tweet-card').addClass('card-danger');
+					}
+					else {
+						$('#single-random-tweet-card').addClass('card-primary');
+					}
 				},
 				error: function (textStatus) {
 					$('#single-random-tweet-card').addClass('card-warning').removeClass('card-primary');
@@ -80,6 +89,8 @@
 	}
 </table>
 
+<h1 class="mt-3">Have the algorithm guess a Tweet's mood!</h1>
+
 <button id="newTweetButton" class="btn btn-primary">Get New Random Tweet</button>
 <div id="single-random-tweet-card" class="card card-inverse card-primary mb-3 mt-3 text-center">
 	<div class="card-block">
@@ -87,6 +98,7 @@
 			<p id="single-random-tweet-text">
 				
 			</p>
+			<footer id="single-random-tweet-mood"></footer>
 			
 		</blockquote>
 	</div>
