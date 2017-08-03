@@ -34,6 +34,25 @@
 			$('.RateAngryBtn, .RateHappyBtn').addClass('disabled');
 			rateTweet('@(Url.Action("RateAngry", "Tweets"))', tweet);
 		});
+
+		$('#newTweetButton').click(function (tweet) {
+			$.ajax({
+				type: "POST",
+				url: "/twitter.svc/GetTweets",
+				contentType: "application/json",
+				data: '{"amount": "1"}',
+				dataType: "json",
+				success: function (result) {
+					$.each(result.d, function (index, value) {
+						$('#single-random-tweet-text').text(value);
+					});
+				},
+				error: function (textStatus) {
+					$('#single-random-tweet-card').addClass('card-warning').removeClass('card-primary');
+					$('#single-random-tweet-text').text('An error has occurred: '+ textStatus.statusText);
+				}
+			});
+		});
 	</script>
 }
 
@@ -61,26 +80,45 @@
 	}
 </table>
 
-<h1>Top 10 Happy Words</h1>
+<button id="newTweetButton" class="btn btn-primary">Get New Random Tweet</button>
+<div id="single-random-tweet-card" class="card card-inverse card-primary mb-3 mt-3 text-center">
+	<div class="card-block">
+		<blockquote class="card-blockquote">
+			<p id="single-random-tweet-text">
+				
+			</p>
+			
+		</blockquote>
+	</div>
+</div>
 
-<ul class="list-group">
-	@foreach (var item in Model.TopHappyWords)
-	{
-		<li class="list-group-item list-group-item-action list-group-item-success justify-content-between">
-			<span>@item.Text</span>
-			<span class="badge badge-default badge-pill">@item.HappyCount</span>
-		</li>
-	}
-</ul>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6">
+			<h1 class="mb-3">Top 10 Happy Words</h1>
 
-<h1>Top 10 Angry Words</h1>
+			<ul class="list-group">
+				@foreach (var item in Model.TopHappyWords)
+				{
+					<li class="list-group-item list-group-item-action list-group-item-success justify-content-between">
+						<span>@item.Text</span>
+						<span class="badge badge-default badge-pill">@item.HappyCount</span>
+					</li>
+				}
+			</ul>
+		</div>
+		<div class="col-md-6">
+			<h1 class="mb-3">Top 10 Angry Words</h1>
 
-<ul class="list-group">
-	@foreach (var item in Model.TopAngryWords)
-	{
-		<li class="list-group-item list-group-item-action list-group-item-danger justify-content-between">
-			<span>@item.Text</span>
-			<span class="badge badge-default badge-pill">@item.AngryCount</span>
-		</li>
-	}
-</ul>
+			<ul class="list-group">
+				@foreach (var item in Model.TopAngryWords)
+				{
+					<li class="list-group-item list-group-item-action list-group-item-danger justify-content-between">
+						<span>@item.Text</span>
+						<span class="badge badge-default badge-pill">@item.AngryCount</span>
+					</li>
+				}
+			</ul>
+		</div>
+	</div>
+</div>
