@@ -55,5 +55,16 @@ namespace TwitterBlueBird.Helpers
 						.ToList();
 			}
 		}
+
+		public static List<Word> MatchedWords(List<String> words)
+		{
+			using (var context = new TwitterAPIContainer())
+			{
+				return (from t in context.Words
+						where words.Contains(t.Text)
+						select t)
+						.ToList();
+			}
+		}
 	}
 }
