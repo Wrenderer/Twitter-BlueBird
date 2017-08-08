@@ -12,9 +12,9 @@ namespace TwitterBlueBird.Helpers
 		private static TwitterAPIContainer db = new TwitterAPIContainer();
 		private static readonly String[] BLACKLIST = { "https", "the", "and", "or", "at", "rt", "to", "a", "in", "but", "is", "so", "as", "by" };
 		private static readonly char[] WORD_SEPARATORS = { ' ', ',', '.', ':', '\t', '/', '-', '"' };
-		private const String HAPPY = "Happy";
-		private const String ANGRY = "Angry";
-		private const String NEUTRAL = "Neither happy nor angry";
+		public const String HAPPY = "Happy";
+		public const String ANGRY = "Angry";
+		public const String NEUTRAL = "Neither happy nor angry";
 
 		public static void ParseTweet(int id, bool Happy)
 		{
